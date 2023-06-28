@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace : DAO 클래스의 메소드를 구현할 때, SQL Mapper의 등록된 SQL의 아이디를 식별 -->
+<mapper namespace="UserDAO">
+	<!-- TYPE : 객체 경로 :: sql-map-config에서 설정됨 ::: PlaceVO -->
+	<resultMap id="userResult" type="user"> 
+		<id property="userId" column="userId" />
+		<result property="userPass" column="userPass" />
+		<result property="userName" column="userName" />
+		<result property="userNickName" column="userNickName" />
+		<result property="userBirth" column="userBirth" />
+		<result property="userPhone" column="userPhone" />
+		<result property="userGender" column="userGender" />
+		<result property="userRdate" column="userRdate" />
+	</resultMap>
+	
+	<!-- CDATA : 안에 들어가는 문장을 문자열로 취급 :: 특수문자( >, * , ...)을 문자로 취급 -->
+
+  	<insert id="registerUser" parameterType="user">
+		<![CDATA[
+			INSERT INTO USER (userId, userPass, userName, userNickName, userBirth, userPhone, userGender)
+			VALUES (#{userId}, #{userPass}, #{userName}, #{userNickName}, STR_TO_DATE(#{userBirth},'%Y-%m-%d'), #{userPhone}, #{userGender})
+		]]>
+	</insert>
+	
+	<select id="checkId" resultType="int">
+		<![CDATA[
+			SELECT COUNT(userId) FROM USER 
+			WHERE userId = #{userId}
+		]]>
+	</select>
+	
+	<select id="checkNickname" resultType="int">
+		<![CDATA[
+			SELECT COUNT(userNickName) FROM USER 
+			WHERE userNickName = #{userNickName}
+		]]>
+	</select>
+	
+	<select id="loginUser" resultType="user">
+		<![CDATA[
+			SELECT userId, userNickName FROM USER
+			WHERE userId LIKE #{userId} AND userPass LIKE #{userPass} 
+		]]>
+	</select>
+	
+		<select id="getUserDetail" resultType="user">
+		<![CDATA[
+			SELECT * FROM USER 
+			WHERE userId LIKE #{userInfo}
+		]]>
+	</select>
+	
+</mapper>

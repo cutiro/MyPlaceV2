@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace : DAO 클래스의 메소드를 구현할 때, SQL Mapper의 등록된 SQL의 아이디를 식별 -->
+<mapper namespace="ReservationDAO">
+	<!-- TYPE : 객체 경로 :: sql-map-config에서 설정됨 ::: ReservationVO -->
+	<resultMap id="reservationResult" type="reservation"> 
+		<id property="reservationCode" column="reservationCode" />
+		<result property="place_code" column="place_code" />
+		<result property="user_id" column="user_id" />
+		<result property="reservationRdate" column="reservationRdate" />
+		<result property="reservationUpddate" column="reservationUpddate" />
+		<result property="reservationDday" column="reservationDday" />
+		<result property="reservationDtime" column="reservationDtime" />
+		<result property="reservationPrice" column="reservationPrice" />
+		<result property="reservationPhone" column="reservationPhone" />
+	</resultMap>
+	
+	<resultMap id="reservationDetailResult" type="reservationDetail"> 
+		<id property="reservationCode" column="reservationCode" />
+		<result property="placeTitle" column="placeTitle" />
+		<result property="userNickname" column="userNickname" />
+		<result property="reservationDday" column="reservationDday" />
+		<result property="reservationDtime" column="reservationDtime" />
+		<result property="reservationPrice" column="reservationPrice" />
+		<result property="reservationPhone" column="reservationPhone" />
+	</resultMap>
+	
+	<resultMap id="reservationUpdateDetailResult" type="reservationUpdateDetail">
+		<id property="reservationCode" column="reservationCode" />
+		<result property="reservationDday" column="reservationDday" />
+		<result property="reservationDtime" column="reservationDtime" />
+		<result property="reservationPhone" column="reservationPhone" />
+		<result property="reservationPrice" column="reservationPrice" />
+	</resultMap>
+	
+	
+	<!-- 예약하기, reservationUserInfo : session에서 "UserVO userInfo"의 getUserCode() -->
+  	<insert id="insertReservation" parameterType="reservation">
+		<![CDATA[
+			INSERT INTO RESERVATION (place_code, user_id, reservationDday, reservationDtime, reservationPrice, reservationPhone)
+			VALUES (#{place_code}, (#{reservationUserInfo}), #{reservationDday}, #{reservationDtime}, #{reservationPrice}, #{reservationPhone})
+		]]>
+	</insert>
+	
+	<!-- 예약 현황 리스트 -->
+	<!-- 파라미터 : Map(String,Object).int.userCode + .String.orderBy -->
+	<!-- orderBy : " all, ongoing , complete -->
+	<select id="getReservationList" parameterType="map" resultType="reservationDetail">
+		<![CDATA[
+			SELECT r.reservationCode as reservationCode, u.userNickName as userNickname, p.placeTitle as placeTitle, r.reservationDday AS reservationDday, r.reservationDtime AS reservationDtime,  r.reservationPrice AS reservationPrice, r.reservationPhone AS reservationPhone
+			FROM USER u, Place p, Reservation r
+			WHERE r.user_id = #{userId} AND u.userid = r.user_Id 
+			AND 
+				CASE 
+					WHEN #{orderBy} LIKE 'ongoing' THEN CONCAT(r.reservationDday,' ',r.reservationDtime) >= NOW()
+					WHEN #{orderBy} LIKE 'complete' THEN CONCAT(r.reservationDday,' ',r.reservationDtime) < NOW()
+				END
+			GROUP BY reservationCode
+			ORDER BY reservationDday, reservationDtime
+		]]>
+	</select>
+	
+	<select id="checkReservation" parameterType="map" resultType="int">
+		<![CDATA[
+			SELECT COUNT(reservationCode) AS result
+			FROM RESERVATION
+			WHERE reservationDday LIKE #{reservationDday} AND  reservationDtime LIKE #{reservationDtime} 
+		]]>
+	</select>
+	
+	<select id="getReservationUpdateForm" parameterType="int" resultType="reservationUpdateDetail">
+		<![CDATA[
+			SELECT reservationCode, reservationDday, reservationDtime, reservationPhone, reservationPrice
+			FROM RESERVATION
+			WHERE reservationCode = #{reservationCode}
+		]]>
+	</select>
+	
+	<update id="updateReservation" parameterType="reservationUpdateDetail">
+		<![CDATA[
+			UPDATE RESERVATION SET reservationPhone = #{reservationPhone}
+			WHERE reservationCode = #{reservationCode}
+		]]>
+	</update>
+	
+</mapper>

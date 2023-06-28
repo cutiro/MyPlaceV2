@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace : DAO 클래스의 메소드를 구현할 때, SQL Mapper의 등록된 SQL의 아이디를 식별 -->
+<mapper namespace="PlaceDAO">
+	<!-- TYPE : 객체 경로 :: sql-map-config에서 설정됨 ::: PlaceVO -->
+	<resultMap id="placeResult" type="place"> 
+		<id property="placeCode" column="placeCode" />
+		<result property="placeTitle" column="placeTitle" />
+		<result property="placeCategory" column="placeCategory" />
+		<result property="placeContent" column="placeContent" />
+		<result property="placePhone" column="placePhone" />
+		<result property="placeFileName" column="placeThumbnail" />
+		<result property="placeZipcode" column="placeZipcode" />
+		<result property="placeAddress" column="placeAddress" />
+		<result property="placePrice" column="placePrice" />
+		<result property="placeRdate" column="placeRdate" />
+		<result property="placeUpddate" column="placeUpddate" />
+		<result property="placeFirsttime" column="placeFirsttime" />
+		<result property="placeLasttime" column="placeLasttime" />
+	</resultMap>
+	
+	<!-- 장소 상품 목록 -->
+	<select id="getPlaceList" resultMap="placeResult">
+		<![CDATA[
+			SELECT * FROM PLACE
+		]]>
+	</select>
+	
+	<!-- 장소 상품 상세 보기 -->
+	<select id="getPlaceDetail" resultMap="placeResult" parameterType="place">
+		<![CDATA[
+			SELECT * FROM PLACE WHERE placeCode = #{placeCode}
+		]]>
+	</select>
+	
+  	<insert id="insertPlace" parameterType="place">
+		<![CDATA[
+			INSERT INTO PLACE (placeTitle, placeCategory, placeContent, placePhone, placeThumbnail, placeZipcode, placeAddress, placePrice, placeFirsttime, placeLasttime)
+			VALUES (#{placeTitle}, #{placeCategory}, #{placeContent}, #{placePhone}, #{placeFileName}, #{placeZipcode}, #{placeAddress}, #{placePrice}, #{placeFirsttime}, #{placeLasttime})
+		]]>
+	</insert>
+	
+	<!-- 장소 상품 수정 -->
+	<update id="updatePlace" parameterType="place">
+		<![CDATA[
+  			UPDATE PLACE SET placeTitle = #{placeTitle}, placeCategory = #{placeCategory}, placeContent = #{placeContent}, placePhone = #{placePhone}, placeThumbnail = #{placeFileName}, placeZipcode = #{placeZipcode}, placeAddress = #{placeAddress}, placePrice = #{placePrice}, placeFirsttime = "#{placeFirsttime}", placeLasttime = "#{placeLasttime} 
+  			WHERE placeCode = #{placeCode}
+		]]>
+	</update>
+	
+	<!-- 장소 상품 삭제 -->
+	<delete id="deletePlace" parameterType="place">
+		<![CDATA[
+			DELETE FROM PLACE WHERE placeCode = #{placeCode}
+		]]>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases> <!-- 별칭, "~.BoardVO"의 별칭을 "board" -->
+		<typeAlias type="com.myplace.biz.place.PlaceVO" alias="place"></typeAlias>
+		<typeAlias type="com.myplace.biz.member.UserVO" alias="user"></typeAlias>
+		<typeAlias type="com.myplace.biz.reservation.ReservationVO" alias="reservation"></typeAlias> <!-- 예약 할 때 쓰는 : 테이블 저장 -->
+		<typeAlias type="com.myplace.biz.reservation.ReservationDetailVO" alias="reservationDetail"></typeAlias> <!-- 예약 리스트, 정보 출력 할 때 -->
+		<typeAlias type="com.myplace.biz.reservation.ReservationUpdateVO" alias="reservationUpdateDetail"></typeAlias> <!-- 예약 수정, 정보 출력 할 때 -->
+	</typeAliases>
+	<mappers> <!-- SQL 안쓰고 Mybatis를 쓸건데 "mapping.xml" 어딨음?? -->
+		<mapper resource="mappings/place-mapping.xml" /> <!-- src/main/resources/mappgins/board~.xml -->
+		<mapper resource="mappings/user-mapping.xml" />
+		<mapper resource="mappings/reservation-mapping.xml" />
+	</mappers>
+</configuration>

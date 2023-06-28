@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!-- base-package : 최상위 패키지 -->
+	<!-- component-scan : 모든 하위 패키지, 클래스 어노테이션 대상화(스캔) -->
+	<context:component-scan base-package="com.myplace.biz"></context:component-scan>
+	<!-- aop 어노테이션 사용을 위한 -->	
+	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> -->
+
+	
+	<!-- DB Connection 설정 // 실질적 DB 기능 X-->
+	<!-- location:src/main/resources/config/database.properties :: 원하는 파일로 대체 가능 -->
+	<context:property-placeholder location="classpath:config/database.properties"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- property name : setter ex>>seturl , setusername --><!-- value : database.Properties의 키 -->
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	
+	<!-- SqlSessionFactoryBean 생성 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:sql-map-config.xml" />
+	</bean>
+	<!-- Spring-Mybatis 연동 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- ref : sessionFactory Beans(위에 있는) -->
+		<constructor-arg ref="sessionFactory"/>
+	</bean>
+	
+	<!-- Spring JDBC 설정 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- ref : dataSource Beans(위에 있는) -->
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
