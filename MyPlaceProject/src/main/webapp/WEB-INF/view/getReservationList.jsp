@@ -72,14 +72,14 @@
                         </thead>
                         <tbody>
                             <c:forEach var="reservation" items="${reservationList}">
-					<input type="hidden" value="${reservation.reservationCode}">
+								<input type="hidden" value="${reservation.reservationCode}">
 								<tr>
-<td><a href="/getReservationUpdateForm.do?reservationCode=${reservation.reservationCode }">${reservation.placeTitle }</a></td>
-					<td>${reservation.reservationDday }</td>
-					<td>${reservation.reservationDtime }</td>
-					<td>${reservation.reservationPrice }</td>
-					<td>${reservation.userNickname }</td>
-					<td>${reservation.reservationPhone }</td>
+									<td>${reservation.placeTitle }</a></td>
+									<td>${reservation.reservationDday }</td>
+									<td>${reservation.reservationDtime }</td>
+									<td>${reservation.reservationPrice }</td>
+									<td>${reservation.userNickname }</td>
+									<td>${reservation.reservationPhone }</td>
 								</tr>
 							</c:forEach>
                         </tbody>

@@ -15,12 +15,12 @@
 	// 페이지 시작
 	$(document).ready(function() {
 		// 취소
-		$("#cancle").on("click", function() {
+		$("#cancleUser").on("click", function() {
 			location.href = "/getPlaceList.do";
 		})
 
 		// 최종 회원가입 , + 아이디 및 닉네임 중복 확인 확인 여부
-		$("#submit").on("click", function() {
+		$("#submitUser").on("click", function() {
 			var checkId_ = $("#checkId").val();
 			var checkNick_ = $("#checkNickName").val();
 			if (checkId_ == "N" ) {
@@ -31,6 +31,7 @@
 				alert(" 닉네임 중복 확인 부탁드립니다.");
 			} else if (checkId_ == "Y" & checkNick_ == "Y") {
 				alert("버튼 클릭됨");
+				alert($("#regForm").text());
 				$("#regForm").submit();
 			};
 		});
@@ -114,10 +115,10 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4" style="width: 90%;">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">장소 등록</h6>
+                <h6 class="m-0 font-weight-bold text-primary">계정 생성</h6>
             </div>
             
-            <form action="registerUser.do" method="post" id="regForm">
+            <form action="registerUser.do" method="POST" id="regForm">
             <div  class="card-body">
             	<div style="width:40%">
 	                <div class="table-responsive" style="float: left; width: 65%">
@@ -163,8 +164,8 @@
 	                </div>
                 </div>
                 <div>
-                	<button type="button" id="submit" class="btn btn-primary" >회원가입</button>
-                	<button type="button" id="cancle" class="btn btn-primary" >취소</button>
+                	<button type="button" id="submitUser" class="btn btn-primary" >회원가입</button>
+                	<button type="button" id="cancleUser" class="btn btn-primary" >취소</button>
                 </div>
             </div> <!-- card-body -->
             </form>

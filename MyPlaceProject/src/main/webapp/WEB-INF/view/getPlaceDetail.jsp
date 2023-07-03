@@ -1,3 +1,5 @@
+<%@page import="org.springframework.ui.Model"%>
+<%@page import="com.myplace.biz.place.PlaceVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -114,13 +116,13 @@
 		</p> -->
 
         <!-- DataTales Example -->
-        <div class="card shadow mb-4" style="width: 55%; float: left;">
+        <div class="card shadow mb-4" style="width: 900px; float: left;">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">장소 이미지</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <img alt="${place.placeFileName }" src="${contextPath}/thumbnails.do?placeFileName=${place.placeFileName}">
+                    <img alt="${place.placeFileName }" src="resources/images/${place.placeFileName}" >
                 </div>
             </div>
         </div>
@@ -133,7 +135,10 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <div class="table-responsive">
-                    <form action="insertReservation.do" method="post" id="reservationForm">
+                    	<h4>${place.placeTitle }</h4>
+                    	<h6>${place.placeAddress }</h6>
+                    	<h6>${place.placePhone }</h6>
+                    	<form action="insertReservation.do" method="post" id="reservationForm">
                     	<input type="hidden" name="place_code" value="${place.placeCode }">
                 		<h6>예약 날짜</h6>
                     	<input id="dday" type="date" name="reservationDday" required="required" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2">

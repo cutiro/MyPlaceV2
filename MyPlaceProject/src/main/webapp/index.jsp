@@ -9,6 +9,7 @@
 <title>Welcome</title>
 </head>
 <body>
-	<c:redirect url="getPlaceList.do"/>
+	<img alt="songpa.JPG" src="/resources/images/songpa.JPG" style="width: 400px">
+	<!--<c:redirect url="getPlaceList.do"/>-->
 </body>
 </html>

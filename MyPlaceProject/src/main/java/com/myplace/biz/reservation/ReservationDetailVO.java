@@ -2,7 +2,7 @@ package com.myplace.biz.reservation;
 
 public class ReservationDetailVO {
 	private int reservationCode; // 예약 코드
-	private int placeTitle; // 예약 장소 이름
+	private String placeTitle; // 예약 장소 이름
 	private String userNickname; // 예약자 사이트 닉네임
 	private String reservationDday; // 예약 날짜
 	private String reservationDtime; // 예약 시간
@@ -17,10 +17,10 @@ public class ReservationDetailVO {
 	public void setReservationCode(int reservationCode) {
 		this.reservationCode = reservationCode;
 	}
-	public int getPlaceTitle() {
+	public String getPlaceTitle() {
 		return placeTitle;
 	}
-	public void setPlaceTitle(int placeTitle) {
+	public void setPlaceTitle(String placeTitle) {
 		this.placeTitle = placeTitle;
 	}
 	public String getUserNickname() {

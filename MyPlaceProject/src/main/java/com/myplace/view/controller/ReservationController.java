@@ -64,7 +64,7 @@ public class ReservationController {
 		UserVO login = (UserVO) session.getAttribute("userInfo");
 		vo.setReservationUserInfo(login.getUserId()); // 예약자 계정 정보, 예약 VO에 담기
 		reservationService.insertReservation(vo);
-		return "redirect:/getReservationDetail.do";
+		return "redirect:/userHome.do?userId="+login.getUserId();
 	}
 	
 	// 예약 목록 - GET

@@ -22,7 +22,7 @@
     <link href="/resources/admin2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+	<script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
 	<title>My Place</title>
 </head>
 <body id="page-top">

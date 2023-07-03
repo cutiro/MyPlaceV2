@@ -22,7 +22,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 public class PlaceController {
-	private static String CURR_IMAGE_REPO_PATH = "C:\\Temp";
+	private static String CURR_IMAGE_REPO_PATH = "C:\\\\Users\\\\SCTHRD\\\\git\\\\MyPlaceV2\\\\MyPlaceProject\\\\src\\\\main\\\\webapp\\\\resources\\\\images";
 	
 	@Autowired
 	PlaceService placeService;
@@ -32,7 +32,6 @@ public class PlaceController {
 	public String getPlaceList(Model model, PlaceVO vo) {
 		model.addAttribute("placeList",placeService.getPlaceList());
 		String filename = "C:\\Temp\\car1.gif";
-		System.out.println("파일네임 " + vo.getPlaceFileName());
 		model.addAttribute("placeImage",filename);
 		return "getPlaceList";
 	}
@@ -50,9 +49,8 @@ public class PlaceController {
 		MultipartFile uploadFile = vo.getPlaceThumbnail();
 		if (!uploadFile.isEmpty()) {
 			String fileName = uploadFile.getOriginalFilename();
-			int placeCode = vo.getPlaceCode();
 			vo.setPlaceFileName(fileName);
-			uploadFile.transferTo(new File("C:/Temp/"+fileName));
+			uploadFile.transferTo(new File("C:\\Users\\SCTHRD\\git\\MyPlaceV2\\MyPlaceProject\\src\\main\\webapp\\resources\\images\\"+fileName));
 		}
 		placeService.insertPlace(vo);
 		return "redirect:/getPlaceList.do";
@@ -82,7 +80,7 @@ public class PlaceController {
 		innerVO.setFirst_(convertType(innerVO.getPlaceFirsttime()));
 		innerVO.setLast_(convertType(innerVO.getPlaceLasttime()));
 		model.addAttribute("place", innerVO);
-
+		model.addAttribute("path","C:\\Temp\\");
 		return "getPlaceDetail";
 	}
 
